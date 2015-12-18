@@ -50,40 +50,22 @@ public class INET implements InetTemplate {
      */
     @Override
     public String getFromFile(String strFileName) throws Exception {
-        ArrayList<String> staList = new ArrayList<>();
-        ArrayList <String> staIndex = new ArrayList<>();
+        //ArrayList<String> staList = new ArrayList<>();
+        //ArrayList <String> staIndex = new ArrayList<>();
 
-        String strFileContents = "";
-        File myFile = new File(strFileName);
-        if (myFile.exists())
-        {
-            // Yea! File Exists (pg 249)
-            Scanner inputFile = new Scanner(myFile);
-            // Initialize a Counter
-            int intCount = 0;
-            while (inputFile.hasNext())
-            {
-                String strRecord = inputFile.nextLine();
+        BufferedReader reader = new BufferedReader( new FileReader (strFileName));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
 
-                //System.out.println(strRecord);              //testing
-
-                //if (intCount > 7) {
-                    //write station weather to ArrayList
-                    staList.add(strRecord);
-
-                    //write StationID to Index Arraylist
-                    staIndex.add(strRecord.substring(7, 11));
-
-                //}
-                //System.out.println(staList.get(intCount));      //testing
-                //System.out.println(staIndex.get(intCount));     //testing
-                intCount++;
-            }
-            inputFile.close();
-            //System.out.println(staList.toString());         //testing
+        while( ( line = reader.readLine() ) != null ) {
+            stringBuilder.append( line );
+            stringBuilder.append( ls );
         }
-        strFileContents = staList.toString();
-        return strFileContents;
+
+        return stringBuilder.toString();
+
+
     }
 
     /**
@@ -205,7 +187,7 @@ public class INET implements InetTemplate {
 
     /**
      * The purpose of this method is to accept a filename and append the contents to the file.  The saveToFile method
-     * in thisvclass erases the file before creating a new one so this one features the append parameter as explained
+     * in this class erases the file before creating a new one so this one features the append parameter as explained
      * in chapter four around page 240.
      * @param strFileName The name of the file to append to.
      * @param strContent The content to append.
